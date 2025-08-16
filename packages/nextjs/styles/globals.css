@@ -121,3 +121,25 @@
 .link:hover {
   opacity: 80%;
 }
+
+/* Donatello Theme - Artistic Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Donatello Theme - Gradient Text Effects */
+.text-gradient-donatello {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
