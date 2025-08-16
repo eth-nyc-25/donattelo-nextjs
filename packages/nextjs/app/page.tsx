@@ -17,10 +17,13 @@ const Home: NextPage = () => {
             <span className="block text-2xl mb-2">Welcome to</span>
             <span className="block text-4xl font-bold">Scaffold-ETH 2</span>
           </h1>
-          <div className="flex justify-center items-center space-x-2 flex-col">
-            <p className="my-2 font-medium">Connected Address:</p>
-            <Address address={connectedAddress} />
-          </div>
+
+          {connectedAddress && (
+            <div className="flex justify-center items-center space-x-2 flex-col mt-8">
+              <p className="my-2 font-medium">Connected Address:</p>
+              <Address address={connectedAddress} />
+            </div>
+          )}
 
           <p className="text-center text-lg">
             Get started by editing{" "}
