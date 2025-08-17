@@ -105,8 +105,8 @@ const Home: NextPage = () => {
               What Donatello Can Do
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="flex flex-col bg-white dark:bg-gray-800 p-8 text-center items-center rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+              <div className="flex flex-col bg-white dark:bg-gray-800 p-8 text-center items-center rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-sm">
                 <div className="p-4 bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900 dark:to-blue-900 rounded-full mb-4">
                   <SparklesIcon className="h-8 w-8 text-purple-600 dark:text-purple-300" />
                 </div>
@@ -116,7 +116,7 @@ const Home: NextPage = () => {
                 </p>
               </div>
 
-              <div className="flex flex-col bg-white dark:bg-gray-800 p-8 text-center items-center rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex flex-col bg-white dark:bg-gray-800 p-8 text-center items-center rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-sm">
                 <div className="p-4 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900 dark:to-purple-900 rounded-full mb-4">
                   <CpuChipIcon className="h-8 w-8 text-indigo-600 dark:text-indigo-300" />
                 </div>
@@ -126,7 +126,7 @@ const Home: NextPage = () => {
                 </p>
               </div>
 
-              <div className="flex flex-col bg-white dark:bg-gray-800 p-8 text-center items-center rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="flex flex-col bg-white dark:bg-gray-800 p-8 text-center items-center rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300 max-w-sm">
                 <div className="p-4 bg-gradient-to-br from-blue-100 to-cyan-100 dark:from-blue-900 dark:to-cyan-900 rounded-full mb-4">
                   <PaintBrushIcon className="h-8 w-8 text-blue-600 dark:text-blue-300" />
                 </div>
