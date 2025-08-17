@@ -9,51 +9,59 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "No image file provided" }, { status: 400 });
     }
 
-    // Validate file type
-    if (image.type !== "image/png") {
-      return NextResponse.json({ error: "Only PNG files are allowed" }, { status: 400 });
+    // Validate file type (allow more types as per your Flask backend)
+    const allowedTypes = ["image/png", "image/jpg", "image/jpeg", "image/gif", "image/bmp", "image/webp"];
+    if (!allowedTypes.includes(image.type)) {
+      return NextResponse.json(
+        {
+          error: "Invalid file type. Allowed: PNG, JPG, JPEG, GIF, BMP, WEBP",
+        },
+        { status: 400 },
+      );
     }
 
-    // Validate file size (10MB max)
-    if (image.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: "File size must be less than 10MB" }, { status: 400 });
+    // Validate file size (16MB max as per your Flask config)
+    if (image.size > 16 * 1024 * 1024) {
+      return NextResponse.json({ error: "File size must be less than 16MB" }, { status: 400 });
     }
 
-    // Convert file to base64 for sending to Python backend
-    const bytes = await image.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-    const base64Image = buffer.toString("base64");
+    // Create FormData to send to Flask backend
+    const flaskFormData = new FormData();
+    flaskFormData.append("image", image);
 
-    // TODO: Replace with your actual Python Flask backend URL
-    const pythonBackendUrl = process.env.PYTHON_BACKEND_URL || "http://localhost:5000";
+    // Flask backend URL
+    const flaskBackendUrl = "http://127.0.0.1:5000";
 
-    // Send to Python backend for SVG conversion and Walrus storage
-    const response = await fetch(`${pythonBackendUrl}/api/convert-to-svg`, {
+    // Send to Flask backend for image analysis and Walrus storage
+    const response = await fetch(`${flaskBackendUrl}/analyze/image`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        image: base64Image,
-        filename: image.name,
-        mimeType: image.type,
-      }),
+      body: flaskFormData,
     });
 
     if (!response.ok) {
-      throw new Error("Failed to convert image to SVG");
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Failed to analyze image");
     }
 
     const data = await response.json();
 
     return NextResponse.json({
       success: true,
-      walrusUrl: data.walrusUrl,
-      svgContent: data.svgContent,
-      message: "Image successfully converted to SVG and stored on Walrus",
+      image_url: data.image_url,
+      image_blob_id: data.image_blob_id,
+      metadata_blob_id: data.metadata_blob_id,
+      image_object_id: data.image_object_id,
+      metadata_object_id: data.metadata_object_id,
+      metadata: data.metadata,
+      message: "Image successfully analyzed and stored on Walrus",
     });
   } catch (error) {
     console.error("Error processing image upload:", error);
-    return NextResponse.json({ error: "Failed to process image" }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : "Failed to process image",
+      },
+      { status: 500 },
+    );
   }
 }

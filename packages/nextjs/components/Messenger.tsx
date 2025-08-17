@@ -65,15 +65,16 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Validate file type (PNG only)
-      if (file.type !== "image/png") {
-        alert("Please select a PNG image file only.");
+      // Validate file type (support multiple types as per Flask backend)
+      const allowedTypes = ["image/png", "image/jpg", "image/jpeg", "image/gif", "image/bmp", "image/webp"];
+      if (!allowedTypes.includes(file.type)) {
+        alert("Please select a valid image file (PNG, JPG, JPEG, GIF, BMP, or WEBP).");
         return;
       }
 
-      // Validate file size (max 10MB)
-      if (file.size > 10 * 1024 * 1024) {
-        alert("File size must be less than 10MB.");
+      // Validate file size (max 16MB as per Flask backend)
+      if (file.size > 16 * 1024 * 1024) {
+        alert("File size must be less than 16MB.");
         return;
       }
 
@@ -96,23 +97,30 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
     }
   };
 
-  const uploadFileToServer = async (file: File): Promise<string> => {
+  const uploadFileToServer = async (file: File): Promise<any> => {
     const formData = new FormData();
     formData.append("image", file);
 
     try {
-      // TODO: Replace with actual Python Flask backend endpoint
       const response = await fetch("/api/upload-image", {
         method: "POST",
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error("Failed to upload image");
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to upload image");
       }
 
       const data = await response.json();
-      return data.walrusUrl; // URL where the SVG is stored on Walrus
+      return {
+        image_url: data.image_url,
+        image_blob_id: data.image_blob_id,
+        metadata_blob_id: data.metadata_blob_id,
+        metadata: data.metadata,
+        image_object_id: data.image_object_id,
+        metadata_object_id: data.metadata_object_id,
+      };
     } catch (error) {
       console.error("Error uploading file:", error);
       throw error;
@@ -124,7 +132,7 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
 
     const userMessage: Message = {
       id: Date.now().toString(),
-      content: inputMessage || (selectedFile ? "🎨 Converting your image to SVG art..." : ""),
+      content: inputMessage || (selectedFile ? "🎨 Analyzing your image and storing on Walrus..." : ""),
       sender: "user",
       timestamp: new Date(),
       imageFile: selectedFile || undefined,
@@ -132,27 +140,29 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = inputMessage;
     setInputMessage("");
     setIsTyping(true);
 
     try {
-      let svgUrl = "";
+      let uploadResult = null;
 
       if (selectedFile) {
-        // Upload file and convert to SVG
-        svgUrl = await uploadFileToServer(selectedFile);
+        // Upload file and get Walrus storage info
+        uploadResult = await uploadFileToServer(selectedFile);
         removeSelectedFile();
       }
 
-      // TODO: Replace with actual API call to Python Flask backend
+      // Send chat message to backend
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          message: inputMessage,
+          message: currentInput,
           imageFile: selectedFile ? true : false,
-          svgUrl: svgUrl,
-          // address: connectedAddress
+          image_blob_id: uploadResult?.image_blob_id || null,
+          metadata: uploadResult?.metadata || null,
+          image_url: uploadResult?.image_url || null,
         }),
       });
 
@@ -160,13 +170,23 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
         const data = await response.json();
         const botMessage: Message = {
           id: (Date.now() + 1).toString(),
-          content:
-            data.response ||
-            "I've processed your image and converted it to SVG! Would you like me to help you mint this as an NFT?",
+          content: data.response || "I've processed your request!",
           sender: "donatello",
           timestamp: new Date(),
         };
         setMessages(prev => [...prev, botMessage]);
+
+        // Log and display Walrus storage info
+        if (uploadResult?.image_url) {
+          console.log("🐋 Walrus Storage Success!");
+          console.log("- Image URL:", uploadResult.image_url);
+          console.log("- Blob ID:", uploadResult.image_blob_id);
+          console.log("- Metadata Blob ID:", uploadResult.metadata_blob_id);
+          console.log("- Object IDs:", {
+            image: uploadResult.image_object_id,
+            metadata: uploadResult.metadata_object_id,
+          });
+        }
       } else {
         throw new Error("Failed to get response");
       }
@@ -306,11 +326,17 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
           <div className="flex gap-3">
             {/* File Upload Button */}
             <div className="relative self-end">
-              <input ref={fileInputRef} type="file" accept="image/png" onChange={handleFileSelect} className="hidden" />
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/png,image/jpg,image/jpeg,image/gif,image/bmp,image/webp"
+                onChange={handleFileSelect}
+                className="hidden"
+              />
               <button
                 onClick={() => fileInputRef.current?.click()}
                 className="btn btn-circle bg-white dark:bg-gray-800 border-purple-300 dark:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900 text-purple-600 dark:text-purple-400"
-                title="Upload PNG image"
+                title="Upload image (PNG, JPG, JPEG, GIF, BMP, WEBP)"
               >
                 <PhotoIcon className="h-5 w-5" />
               </button>
@@ -321,7 +347,7 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
               value={inputMessage}
               onChange={e => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Describe or upload a PNG image..."
+              placeholder="Describe your creative vision or upload an image to analyze and store on Walrus..."
               className="flex-1 input input-bordered bg-white dark:bg-gray-800 border-purple-300 dark:border-purple-700 focus:border-purple-500 dark:focus:border-purple-500 h-12"
             />
 
