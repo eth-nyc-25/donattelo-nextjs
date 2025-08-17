@@ -69,6 +69,8 @@
     "gasless",
     "gaslimit",
     "gasprize",
+    "genai",
+    "generativeai",
     "goerli",
     "graphql",
     "Guten",

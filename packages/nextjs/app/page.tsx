@@ -82,8 +82,8 @@ const Home: NextPage = () => {
           </h1>
 
           <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-            Transform your imagination into digital masterpieces or upload your PNG artwork and watch me create stunning
-            SVG NFTs ready to be minted and auctioned on Opensea.
+            Transform your imagination into digital masterpieces. Describe or upload your artwork and watch me create
+            stunning SVG NFTs ready to be minted and auctioned on Opensea.
           </p>
 
           {connectedAddress && (
