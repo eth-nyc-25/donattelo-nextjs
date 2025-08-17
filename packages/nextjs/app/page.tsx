@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
 import {
@@ -62,6 +63,27 @@ const Home: NextPage = () => {
             <ChatBubbleLeftRightIcon className="h-6 w-6" />
             Upload & Create with AI
           </button>
+        </div>
+
+        {/* Navigation Section */}
+        <div className="w-full mt-16 px-8 py-8 bg-gradient-to-r from-purple-50 to-blue-50 dark:from-purple-900/20 dark:to-blue-900/20">
+          <div className="max-w-4xl mx-auto text-center">
+            <h3 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-200">Developer Tools</h3>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link
+                href="/test"
+                className="btn btn-outline btn-primary gap-2 hover:scale-105 transition-transform duration-200"
+              >
+                🧪 OpenSea Integration Test
+              </Link>
+              <Link
+                href="/debug"
+                className="btn btn-outline btn-secondary gap-2 hover:scale-105 transition-transform duration-200"
+              >
+                🔧 Contract Debug
+              </Link>
+            </div>
+          </div>
         </div>
 
         {/* Features Section */}
