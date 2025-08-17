@@ -27,7 +27,6 @@ const Home: NextPage = () => {
       "Hola!", // Spanish
       "Guten Tag!", // German
       "Konnichiwa!", // Japanese
-      "Annyeonghaseyo!", // Korean
       "Ni hao!", // Chinese
       "Namaste!", // Hindi
       "Shalom!", // Hebrew
