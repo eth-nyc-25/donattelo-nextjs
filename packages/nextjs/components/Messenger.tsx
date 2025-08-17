@@ -305,7 +305,7 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
 
           <div className="flex gap-3">
             {/* File Upload Button */}
-            <div className="relative">
+            <div className="relative self-end">
               <input ref={fileInputRef} type="file" accept="image/png" onChange={handleFileSelect} className="hidden" />
               <button
                 onClick={() => fileInputRef.current?.click()}
@@ -316,14 +316,16 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
               </button>
             </div>
 
-            <textarea
+            <input
+              type="text"
               value={inputMessage}
               onChange={e => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Describe the artwork you'd like to create or upload a PNG image..."
-              className="flex-1 textarea textarea-bordered resize-none bg-white dark:bg-gray-800 border-purple-300 dark:border-purple-700 focus:border-purple-500 dark:focus:border-purple-500"
-              rows={2}
+              placeholder="Describe or upload a PNG image..."
+              className="flex-1 input input-bordered bg-white dark:bg-gray-800 border-purple-300 dark:border-purple-700 focus:border-purple-500 dark:focus:border-purple-500 h-12"
             />
+
+            {/* Send Message Button */}
             <button
               onClick={sendMessage}
               disabled={(!inputMessage.trim() && !selectedFile) || isTyping}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
@@ -17,6 +17,45 @@ import { SwitchTheme } from "~~/components/SwitchTheme";
 const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
   const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // Array of greetings in different languages
+  const greetings = useMemo(
+    () => [
+      "Buongiorno!", // Italian
+      "Hello!", // English
+      "Bonjour!", // French
+      "Hola!", // Spanish
+      "Guten Tag!", // German
+      "Konnichiwa!", // Japanese
+      "Annyeonghaseyo!", // Korean
+      "Ni hao!", // Chinese
+      "Namaste!", // Hindi
+      "Shalom!", // Hebrew
+      "Salaam!", // Arabic
+      "Olá!", // Portuguese
+      "Privyet!", // Russian
+      "Hej!", // Swedish
+      "Hallo!", // Dutch
+    ],
+    [],
+  );
+
+  const [currentGreeting, setCurrentGreeting] = useState(greetings[0]); // Start with Buongiorno!
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentGreeting(prevGreeting => {
+        // Get a random greeting that's different from the current one
+        let newGreeting;
+        do {
+          newGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+        } while (newGreeting === prevGreeting && greetings.length > 1);
+        return newGreeting;
+      });
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [greetings]);
 
   return (
     <>
@@ -35,8 +74,8 @@ const Home: NextPage = () => {
           </div>
 
           <h1 className="text-center mb-6">
-            <span className="block text-6xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4 pb-4">
-              Buongiorno!
+            <span className="block text-6xl font-bold bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4 pb-4 transition-all duration-500 ease-in-out">
+              {currentGreeting}
             </span>
             <span className="block text-2xl text-gray-600 dark:text-gray-300 font-light">
               I am an AI-Powered Creative Studio
