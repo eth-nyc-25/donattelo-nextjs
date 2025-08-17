@@ -11,7 +11,7 @@ interface WalrusLinkProps {
 
 export const WalrusLink = ({ blobId, className = "", children }: WalrusLinkProps) => {
   const [isValid, setIsValid] = useState<boolean | null>(null);
-  const walrusUrl = `https://publisher.walrus-testnet.walrus.space/v1/blobs/${blobId}`;
+  const walrusUrl = `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${blobId}`;
 
   useEffect(() => {
     const checkBlob = async () => {

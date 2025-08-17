@@ -46,7 +46,10 @@ export async function POST(request: NextRequest) {
     console.log("- Image Object ID:", data.image_object_id);
     console.log("- Metadata Object ID:", data.metadata_object_id);
     console.log("- Flask Proxy URL:", data.image_url);
-    console.log("- Direct Walrus URL:", `https://publisher.walrus-testnet.walrus.space/v1/blobs/${data.image_blob_id}`);
+    console.log(
+      "- Direct Walrus URL:",
+      `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${data.image_blob_id}`,
+    );
 
     return NextResponse.json({
       success: true,
@@ -57,7 +60,7 @@ export async function POST(request: NextRequest) {
       metadata_object_id: data.metadata_object_id,
       metadata: data.metadata,
       message: "Image successfully analyzed and stored on Walrus",
-      walrus_direct_url: `https://publisher.walrus-testnet.walrus.space/v1/blobs/${data.image_blob_id}`,
+      walrus_direct_url: `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${data.image_blob_id}`,
     });
   } catch (error) {
     console.error("Error processing image upload:", error);

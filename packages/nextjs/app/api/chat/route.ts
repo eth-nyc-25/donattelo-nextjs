@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       console.log("🐋 Walrus Storage Details:");
       console.log("- Image Blob ID:", image_blob_id);
       console.log("- Walrus URL:", walrusUrl);
-      console.log("- Direct Walrus URL:", `https://publisher.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}`);
+      console.log("- Direct Walrus URL:", `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}`);
       console.log("- Metadata:", metadata);
 
       // Send to Gemini AI for response about the uploaded image
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         
 🐋 Walrus Storage Details:
 - Image Blob ID: ${image_blob_id}
-- Direct Walrus URL: https://publisher.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}
+- Direct Walrus URL: https://aggregator.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}
 - Flask Proxy URL: ${walrusUrl}
 
 ${
@@ -80,7 +80,7 @@ User message: ${message || "What do you think of this image?"}`;
 
 � **Walrus Storage Success:**
 📍 **Your Image URL**: ${walrusUrl}
-🔗 **Direct Walrus URL**: https://publisher.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}
+🔗 **Direct Walrus URL**: https://aggregator.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}
 🆔 **Blob ID**: \`${image_blob_id}\`
 
 ${
@@ -147,7 +147,7 @@ ${metadata.dominant_colors ? `• Dominant colors: ${metadata.dominant_colors.sl
       image_blob_id: image_blob_id || null,
       walrus_url: walrusUrl || null,
       walrus_direct_url: image_blob_id
-        ? `https://publisher.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}`
+        ? `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${image_blob_id}`
         : null,
     });
   } catch (error) {

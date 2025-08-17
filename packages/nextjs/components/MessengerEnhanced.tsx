@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { NFTMinter } from "./NFTMinter";
 import { WalrusLink } from "./WalrusLink";
 import { PaperAirplaneIcon, PhotoIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useChat } from "~~/hooks/useChat";
@@ -199,7 +200,7 @@ export const MessengerEnhanced = ({ isOpen, onClose }: MessengerProps) => {
                             </WalrusLink>
                             <div className="text-xs text-gray-500 dark:text-gray-400 font-mono break-all">
                               {(() => {
-                                const fullUrl = `https://publisher.walrus-testnet.walrus.space/v1/blobs/${message.imageContext.image_blob_id}`;
+                                const fullUrl = `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${message.imageContext.image_blob_id}`;
                                 return fullUrl.length > 60
                                   ? `${fullUrl.slice(0, 35)}...${fullUrl.slice(-15)}`
                                   : fullUrl;
@@ -216,6 +217,25 @@ export const MessengerEnhanced = ({ isOpen, onClose }: MessengerProps) => {
                         </div>
                       </div>
                     </div>
+                  </div>
+                )}
+
+                {/* NFT Minting Section - only show for messages with Walrus images */}
+                {message.imageContext && (
+                  <div className="mt-3">
+                    <NFTMinter
+                      walrusBlobId={message.imageContext.image_blob_id}
+                      metadataBlobId={message.imageContext.metadata_blob_id || ""}
+                      walrusUploadResult={message.imageContext}
+                      onMintSuccess={(tokenId, txHash) => {
+                        console.log("🎉 NFT Minted Successfully!");
+                        console.log("Token ID:", tokenId);
+                        console.log("Transaction:", txHash);
+                      }}
+                      onMintError={error => {
+                        console.error("❌ NFT Minting Failed:", error);
+                      }}
+                    />
                   </div>
                 )}
 

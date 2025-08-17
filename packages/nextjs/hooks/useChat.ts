@@ -72,7 +72,7 @@ export const useChat = (): UseChatReturn => {
         console.log("- Flask Proxy URL:", walrusResult.image_url);
         console.log(
           "- Direct Walrus URL:",
-          `https://publisher.walrus-testnet.walrus.space/v1/blobs/${walrusResult.image_blob_id}`,
+          `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${walrusResult.image_blob_id}`,
         );
         console.log("- File Info:", walrusResult.metadata.file_info);
 
@@ -85,7 +85,7 @@ export const useChat = (): UseChatReturn => {
         ? `User uploaded an image: ${imageFile.name}. 
              
              Image stored on Walrus with blob ID: ${walrusResult?.image_blob_id}
-             Direct Walrus URL: https://publisher.walrus-testnet.walrus.space/v1/blobs/${walrusResult?.image_blob_id}
+             Direct Walrus URL: https://aggregator.walrus-testnet.walrus.space/v1/blobs/${walrusResult?.image_blob_id}
              
              Provide creative insights about this image. Mention the Walrus storage success and ask if they want to mint it as an NFT or create variations.
              

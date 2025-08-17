@@ -6,7 +6,7 @@ const FLASK_BASE_URL = "http://127.0.0.1:5000";
 // Verify if a Walrus blob actually exists
 export const verifyWalrusBlob = async (blobId: string): Promise<boolean> => {
   try {
-    const response = await fetch(`https://publisher.walrus-testnet.walrus.space/v1/blobs/${blobId}`, {
+    const response = await fetch(`https://aggregator.walrus-testnet.walrus.space/v1/blobs/${blobId}`, {
       method: "HEAD",
       cache: "no-cache",
     });
@@ -37,7 +37,7 @@ export const uploadImageToWalrus = async (imageFile: File): Promise<WalrusUpload
   console.log("🐋 Walrus Storage Success:");
   console.log("- Image Blob ID:", data.image_blob_id);
   console.log("- Metadata Blob ID:", data.metadata_blob_id);
-  console.log("- Direct Walrus URL:", `https://publisher.walrus-testnet.walrus.space/v1/blobs/${data.image_blob_id}`);
+  console.log("- Direct Walrus URL:", `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${data.image_blob_id}`);
   console.log("- Flask Proxy URL:", data.image_url);
 
   // Verify the blob actually exists on Walrus
@@ -131,7 +131,7 @@ export const getFlaskImageUrl = (imageBlobId: string): string => {
 };
 
 export const getDirectWalrusImageUrl = (imageBlobId: string): string => {
-  return `https://publisher.walrus-testnet.walrus.space/v1/blobs/${imageBlobId}`;
+  return `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${imageBlobId}`;
 };
 
 // Generate NFT metadata from Walrus upload result

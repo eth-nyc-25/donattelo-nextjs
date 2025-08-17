@@ -11,7 +11,7 @@ import {
   PaintBrushIcon,
   SparklesIcon,
 } from "@heroicons/react/24/outline";
-import { Messenger } from "~~/components/Messenger";
+import { MessengerEnhanced } from "~~/components/MessengerEnhanced";
 import { SwitchTheme } from "~~/components/SwitchTheme";
 
 const Home: NextPage = () => {
@@ -155,7 +155,7 @@ const Home: NextPage = () => {
       </div>
 
       {/* Messenger Component */}
-      <Messenger isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
+      <MessengerEnhanced isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
       {/* Floating Action Buttons */}
       {!isChatOpen && (
