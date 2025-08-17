@@ -32,11 +32,6 @@ export const OnchainKitScaffoldProvider = ({ children }: PropsWithChildren) => {
         appearance: {
           mode: "auto",
         },
-        wallet: {
-          display: "modal",
-          termsUrl: "",
-          privacyUrl: "",
-        },
       }}
     >
       {children}

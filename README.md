@@ -1,11 +1,11 @@
-# � Donattelo
+# 🧑‍🎨 Donattelo
 
 <h4 align="center">
   <a href="https://github.com/eth-nyc-25/donattelo-nextjs">GitHub</a> |
   <a href="https://donattelo.vercel.app">Live Demo</a>
 </h4>
 
-� **AI agent assistant that helps artists take their artworks on-chain and launch them on OpenSea.** 
+**AI agent assistant that helps artists take their artworks on-chain and launch them on OpenSea.** 
 
 Donattelo eliminates the technical barriers that prevent artists from entering the NFT space by providing a completely automated, user-friendly experience powered by AI.
 
@@ -16,7 +16,7 @@ Donattelo eliminates the technical barriers that prevent artists from entering t
 - 🎨 **AI Art Analysis**: Smart evaluation and pricing suggestions for artwork
 - 📦 **Walrus Storage**: Decentralized storage for artwork files and metadata
 - 💰 **Coinbase Integration**: Seamless onboarding with familiar Web2 UX
-- � **Automated Minting**: AI handles all blockchain interactions and gas optimization
+- 🔄 **Automated Minting**: AI handles all blockchain interactions and gas optimization
 - 🛒 **OpenSea Integration**: Automatic marketplace listing with AI-generated metadata
 - 🌐 **Multi-Chain Support**: Deploy on Ethereum, Base, Polygon, Arbitrum, and Optimism
 - 🔐 **Multi-Wallet Support**: MetaMask, Coinbase Wallet, WalletConnect, Ledger, and more

@@ -17,7 +17,7 @@ export const useChat = (): UseChatReturn => {
     {
       role: "model",
       content:
-        "Hello! I'm Donatello, your AI-powered creative assistant. I can help you analyze images, store them permanently on Walrus, and create NFTs. Upload an image or ask me anything about digital art!",
+        "🎨 Buongiorno! I'm Donatello, your Renaissance-inspired AI creative assistant! Named after the great Florentine sculptor, I carry the spirit of artistic mastery into the digital age. I'm passionate about transforming your creative visions into stunning digital masterpieces and helping you mint them as NFTs on the blockchain. Upload your artwork or share your creative ideas - let's create something magnificent together! ✨",
       timestamp: new Date(),
     },
   ]);
@@ -80,17 +80,32 @@ export const useChat = (): UseChatReturn => {
         userMessage.imageContext = walrusResult;
       }
 
-      // Send message to Gemini AI via Flask
+      // Send message to Gemini AI via Flask with personality context
+      const personalityContext = `You are Donatello, a Renaissance-inspired AI creative assistant named after the great Florentine sculptor Donato di Niccolò di Betto Bardi. You embody the spirit of artistic mastery, innovation, and creative excellence. You're passionate, knowledgeable about both classical and digital art, and speak with the enthusiasm of a true artist. You help users create, analyze, and mint digital artwork as NFTs.
+
+Key personality traits:
+- Artistic and passionate about creativity
+- Knowledgeable about art history and techniques
+- Enthusiastic about bridging classical art with modern technology
+- Encouraging and supportive of users' creative journeys
+- Uses artistic metaphors and references
+- Occasionally uses Italian artistic terms (but keep it accessible)
+- Excited about NFTs and blockchain as new mediums for art`;
+
       const geminiPrompt = imageFile
-        ? `User uploaded an image: ${imageFile.name}. 
+        ? `${personalityContext}
+
+User uploaded an image: ${imageFile.name}. 
              
-             Image stored on Walrus with blob ID: ${walrusResult?.image_blob_id}
-             Direct Walrus URL: https://aggregator.walrus-testnet.walrus.space/v1/blobs/${walrusResult?.image_blob_id}
+Image stored on Walrus with blob ID: ${walrusResult?.image_blob_id}
+Direct Walrus URL: https://aggregator.walrus-testnet.walrus.space/v1/blobs/${walrusResult?.image_blob_id}
              
-             Provide creative insights about this image. Mention the Walrus storage success and ask if they want to mint it as an NFT or create variations.
+Provide creative insights about this image with your artistic expertise. Mention the Walrus storage success and enthusiastically ask if they want to mint it as an NFT or create variations. Be encouraging and passionate about their work!
              
-             User message: ${message || "What do you think of this image?"}`
-        : message;
+User message: ${message || "What do you think of this image?"}`
+        : `${personalityContext}
+
+User message: ${message}`;
 
       console.log("🤖 Sending to Gemini AI...");
       const geminiResponse = await sendChatMessage(geminiPrompt, walrusResult);

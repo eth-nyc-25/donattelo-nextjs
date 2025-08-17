@@ -4,13 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import type { NextPage } from "next";
 import { useAccount } from "wagmi";
-import {
-  ChatBubbleLeftRightIcon,
-  CpuChipIcon,
-  GlobeAltIcon,
-  PaintBrushIcon,
-  SparklesIcon,
-} from "@heroicons/react/24/outline";
+import { ChatBubbleLeftRightIcon, CpuChipIcon, PaintBrushIcon, SparklesIcon } from "@heroicons/react/24/outline";
 import { MessengerEnhanced } from "~~/components/MessengerEnhanced";
 import { SwitchTheme } from "~~/components/SwitchTheme";
 
@@ -77,13 +71,15 @@ const Home: NextPage = () => {
               {currentGreeting}
             </span>
             <span className="block text-2xl text-gray-600 dark:text-gray-300 font-light">
-              I am an AI-Powered Creative Studio
+              I am Donatello, your Renaissance AI Maestro
             </span>
           </h1>
 
           <p className="text-xl text-gray-700 dark:text-gray-300 mb-8 leading-relaxed">
-            Transform your imagination into digital masterpieces. Describe or upload your artwork and watch me create
-            stunning SVG NFTs ready to be minted and auctioned on Opensea.
+            Named after the great Florentine sculptor, I bring centuries of artistic mastery into the digital age.
+            Transform your creative visions into magnificent SVG masterpieces and mint them as eternal NFTs on the
+            blockchain. Upload your artwork or share your ideas - let&apos;s create something truly extraordinary
+            together! 🎨✨
           </p>
 
           {connectedAddress && (
@@ -98,7 +94,7 @@ const Home: NextPage = () => {
             className="btn btn-lg gap-2 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-600 hover:from-purple-700 hover:via-blue-700 hover:to-indigo-700 text-white border-none"
           >
             <ChatBubbleLeftRightIcon className="h-6 w-6" />
-            Upload & Create with AI
+            Begin Creating with Donatello
           </button>
         </div>
 
@@ -137,16 +133,6 @@ const Home: NextPage = () => {
                 <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">Walrus Storage</h3>
                 <p className="text-gray-600 dark:text-gray-400">
                   Your converted SVG artworks are securely stored on Walrus for permanent availability and minting.
-                </p>
-              </div>
-
-              <div className="flex flex-col bg-white dark:bg-gray-800 p-8 text-center items-center rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <div className="p-4 bg-gradient-to-br from-cyan-100 to-teal-100 dark:from-cyan-900 dark:to-teal-900 rounded-full mb-4">
-                  <GlobeAltIcon className="h-8 w-8 text-cyan-600 dark:text-cyan-300" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-800 dark:text-gray-200">Multi-Chain Support</h3>
-                <p className="text-gray-600 dark:text-gray-400">
-                  Deploy on Ethereum, Base, Polygon, Arbitrum, and Optimism networks.
                 </p>
               </div>
             </div>
