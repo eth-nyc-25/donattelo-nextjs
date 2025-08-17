@@ -266,7 +266,7 @@ export const Messenger = ({ isOpen, onClose }: MessengerProps) => {
                   </div>
                 )}
 
-                <p className="whitespace-pre-wrap">{message.content}</p>
+                <p className="whitespace-pre-wrap break-words overflow-hidden">{message.content}</p>
               </div>
             </div>
           ))}
